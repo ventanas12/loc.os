@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador de Línea de Comandos</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: monospace;
+            padding: 20px;
+        }
+        #terminal {
+            border: 1px solid #0f0;
+            padding: 10px;
+            min-height: 300px;
+            overflow: auto;
+        }
+        .command {
+            margin: 0;
+        }
+        #input {
+            background-color: #000;
+            color: #0f0;
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal">
+        <p class="command">Bienvenido al Simulador de Línea de Comandos</p>
+    </div>
+    <input type="text" id="input" autofocus>
+    <script>
+        const terminal = document.getElementById('terminal');
+        const input = document.getElementById('input');
+
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const command = input.value;
+                input.value = '';
+                executeCommand(command);
+            }
+        });
+
+        function executeCommand(command) {
+            const newCommand = document.createElement('p');
+            newCommand.className = 'command';
+            newCommand.textContent = '> ' + command;
+            terminal.appendChild(newCommand);
+
+            const response = document.createElement('p');
+            response.className = 'command';
+            response.textContent = handleCommand(command);
+            terminal.appendChild(response);
+
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function handleCommand(command) {
+            switch(command) {
+                case 'help':
+                    return 'Comandos disponibles: help, about, clear';
+                case 'about':
+                    return 'Simulador de Línea de Comandos v1.0';
+                case 'clear':
+                    terminal.innerHTML = '';
+                    return 'Terminal cleared';
+                default:
+                    return 'Comando no reconocido: ' + command;
+            }
+        }
+    </script>
+</body>
+</html>
